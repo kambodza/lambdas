@@ -4,6 +4,8 @@
 #include <string>
 #include <thread>
 
-void schedule(std::function<void()> func, std::chrono::seconds sec);
-void schedule(std::function<void(int)> func, std::chrono::seconds sec, int a);
-void schedule(std::function<void(std::string, double)> func, std::chrono::seconds sec, std::string str, double a);
+template <typename Func, typename... A>
+void schedule( Func func, std::chrono::seconds sec, A... a ){
+    std::this_thread::sleep_for( sec );
+    func(a...);
+}
